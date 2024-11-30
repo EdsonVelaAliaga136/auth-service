@@ -1,5 +1,6 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,16 +20,18 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "roles")
-@EntityListeners(AuditingEntityListener.class)
-public class Role {
+//@EntityListeners(AuditingEntityListener.class)
+public class Role extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
     @Column(nullable = false, unique = true, length = 100)
     private String roleName;
+    @Column(nullable = false, length = 100)
+    private String description;
     @Column(nullable = false)
     private Boolean isActive = true;
     @ManyToMany(fetch = FetchType.LAZY)
@@ -38,7 +41,7 @@ public class Role {
                 foreignKey = @ForeignKey(name = "role_menu_fk"))
     private Set<Menu> menus;
 
-        @CreatedDate
+    /*@CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -49,5 +52,10 @@ public class Role {
     private String createdBy;
     @LastModifiedBy
     @Column(name = "updated_by")
-    private String updatedBy;
+    private String updatedBy;*/
+
+    @Override
+    public Long getId() {
+        return this.roleId;
+    }
 }

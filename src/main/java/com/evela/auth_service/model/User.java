@@ -1,6 +1,10 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.base.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,20 +22,33 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+//@EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     @Column(nullable = false, unique = true, length = 50)
+    @NotNull(message = "El nombre de usuario no puede ser nulo")
+    @Size(min = 3, max = 50, message = "El nombre de usuario debe tener entre 3 y 50 caracteres")
     private String username;
+
     @Column(nullable = false, length = 60)
+    @NotNull(message = "La contraseña no puede ser nula")
+    @Size(min = 6, max = 60, message = "La contraseña debe tener entre 6 y 60 caracteres")
     private String password;
+
+    @NotNull(message = "El email no puede ser nulo")
+    @Email(message = "El correo electrónico no es válido")
+    private String email;
+
     @Column(nullable = false)
+    @NotNull(message = "El estado no puede ser nulo")
     private Boolean isActive = true;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
                 joinColumns = @JoinColumn(name = "userId"),
@@ -39,7 +56,12 @@ public class User {
                 foreignKey = @ForeignKey(name = "user_role_fk"))
     private Set<Role> roles;
 
-    @CreatedDate
+    @Override
+    public Long getId() {
+        return this.userId;
+    }
+
+    /*@CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -50,5 +72,5 @@ public class User {
     private String createdBy;
     @LastModifiedBy
     @Column(name = "updated_by")
-    private String updatedBy;
+    private String updatedBy;*/
 }

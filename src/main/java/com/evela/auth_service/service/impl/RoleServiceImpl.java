@@ -1,9 +1,10 @@
 package com.evela.auth_service.service.impl;
 
 import com.evela.auth_service.model.Role;
-import com.evela.auth_service.repository.IGenericRepo;
 import com.evela.auth_service.repository.IRoleRepo;
 import com.evela.auth_service.service.IRoleService;
+import com.evela.common_service.repository.IGenericRepo;
+import com.evela.common_service.service.impl.CRUDImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
