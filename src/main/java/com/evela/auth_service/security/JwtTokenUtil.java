@@ -1,5 +1,6 @@
 package com.evela.auth_service.security;
 
+import com.evela.common_service.util.JwtUtilInterface;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +21,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtTokenUtil implements Serializable, JwtUtilInterface {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -42,8 +43,8 @@ public class JwtTokenUtil implements Serializable {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 //.signWith(SignatureAlgorithm.HS512, jwtSecret)
-                //.signWith(getSigningKey())
-                .signWith(key, SignatureAlgorithm.HS512)
+                .signWith(getSigningKey())
+                //.signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -78,5 +79,28 @@ public class JwtTokenUtil implements Serializable {
     public boolean validateToken(String token, UserDetails userDetails){
         final String username = getUsernameFromToken(token);
         return (username.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+    @Override
+     public String extractUsername(String token) {
+        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        return Jwts.parserBuilder()  // Usando la API moderna sin métodos deprecated
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+     @Override
+    public boolean validateToken(String token) {
+        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        try {
+            Jwts.parserBuilder()  // Usando la API moderna sin métodos deprecated
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

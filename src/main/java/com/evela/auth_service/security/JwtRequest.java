@@ -1,15 +1,13 @@
 package com.evela.auth_service.security;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
-//Clase S3
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class JwtRequest implements Serializable {
 
     private String username;

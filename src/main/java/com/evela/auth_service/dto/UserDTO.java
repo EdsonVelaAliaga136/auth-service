@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO extends BaseDTO<Long> {
-    @NotNull
+    @NotNull(message = "El ID del user no puede ser nulo")
     private Long userId;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
@@ -45,7 +45,7 @@ public class UserDTO extends BaseDTO<Long> {
     @Email(message = "El correo electrónico no es válido")
     private String email;
 
-    @NotNull(message = "El estado no puede ser nulo")
+    /*@NotNull(message = "El estado no puede ser nulo")
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private boolean isActive;
+    private boolean active;*/
 }

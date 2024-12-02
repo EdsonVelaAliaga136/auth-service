@@ -9,13 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -26,7 +20,7 @@ import java.util.Set;
 //@EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
 public class User extends BaseEntity {
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -47,7 +41,7 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     @NotNull(message = "El estado no puede ser nulo")
-    private Boolean isActive = true;
+    private Boolean active = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -56,10 +50,10 @@ public class User extends BaseEntity {
                 foreignKey = @ForeignKey(name = "user_role_fk"))
     private Set<Role> roles;
 
-    @Override
+    /*@Override
     public Long getId() {
         return this.userId;
-    }
+    }*/
 
     /*@CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

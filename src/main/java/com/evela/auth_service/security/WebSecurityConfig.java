@@ -25,17 +25,13 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 //@RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    //@Autowired
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    //@Autowired
     private final UserDetailsService jwtUserDetailsService;
 
-    //@Autowired
     private final JwtRequestFilter jwtRequestFilter;
 
-    //@Autowired
-    //@Qualifier("handlerExceptionResolver")
+    @Qualifier("handlerExceptionResolver")
     private final HandlerExceptionResolver exceptionResolver;
 
     public WebSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, UserDetailsService jwtUserDetailsService, JwtRequestFilter jwtRequestFilter, @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver) {
@@ -65,11 +61,13 @@ public class WebSecurityConfig {
         httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/login").permitAll() //.hasAuthority("ADMIN")
-                        //.requestMatchers("/categories/**").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll() //.hasAuthority("ADMIN")
+                        .requestMatchers("/api/roles/**").authenticated()
+                        .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/rest/**").permitAll()
                         .requestMatchers("/v3/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
+                        //.anyRequest().permitAll())
                         .anyRequest().authenticated())
                 .httpBasic(basic -> basic.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

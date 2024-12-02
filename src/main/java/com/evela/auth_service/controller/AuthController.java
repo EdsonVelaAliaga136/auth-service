@@ -1,8 +1,12 @@
 package com.evela.auth_service.controller;
 
 import com.evela.auth_service.security.*;
+import com.evela.auth_service.security.JwtRequest;
+import com.evela.auth_service.security.JwtResponse;
+import com.evela.auth_service.security.JwtTokenUtil;
+import com.evela.auth_service.security.JwtUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
@@ -25,7 +29,8 @@ public class AuthController {
         authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
         final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
+        //return ResponseEntity.ok(new JwtResponse(token));
     }
 
      private void authenticate(String username, String password) throws Exception {

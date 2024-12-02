@@ -6,14 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.awt.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -22,9 +15,8 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "roles")
-//@EntityListeners(AuditingEntityListener.class)
 public class Role extends BaseEntity {
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
@@ -33,7 +25,7 @@ public class Role extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String description;
     @Column(nullable = false)
-    private Boolean isActive = true;
+    private Boolean active = true;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "menu_role",
                 joinColumns = @JoinColumn(name = "roleId"),
@@ -41,21 +33,8 @@ public class Role extends BaseEntity {
                 foreignKey = @ForeignKey(name = "role_menu_fk"))
     private Set<Menu> menus;
 
-    /*@CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-    @CreatedBy
-    @Column(name = "created_by", nullable = false, updatable = false)
-    private String createdBy;
-    @LastModifiedBy
-    @Column(name = "updated_by")
-    private String updatedBy;*/
-
-    @Override
+    /*@Override
     public Long getId() {
         return this.roleId;
-    }
+    }*/
 }

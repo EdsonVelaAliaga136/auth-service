@@ -16,4 +16,10 @@ public class CustomErrorResponse {
     private LocalDateTime datetime;
     private String message;
     private String path;
+
+    /*public CustomErrorResponse(LocalDateTime datetime, String message, String path) {
+        this.datetime = datetime;
+        this.message = message;
+        this.path = path;
+    }*/
 }

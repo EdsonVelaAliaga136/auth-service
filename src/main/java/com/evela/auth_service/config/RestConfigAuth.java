@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Duration;
 
 @Configuration
-public class RestConfig {
+public class RestConfigAuth {
 
     @Value("${resttemplate.connect-timeout}")
     private int connectTimeout;

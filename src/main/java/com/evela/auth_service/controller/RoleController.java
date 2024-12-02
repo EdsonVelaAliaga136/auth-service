@@ -1,9 +1,9 @@
 package com.evela.auth_service.controller;
 
-import com.evela.auth_service.dto.UserDTO;
-import com.evela.auth_service.mapper.UserMapper;
-import com.evela.auth_service.model.User;
-import com.evela.auth_service.service.IUserService;
+import com.evela.auth_service.dto.RoleDTO;
+import com.evela.auth_service.mapper.RoleMapper;
+import com.evela.auth_service.model.Role;
+import com.evela.auth_service.service.IRoleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/Users")
+@RequestMapping("api/roles")
 @Validated
 @RequiredArgsConstructor
-public class UserController {
-    private final IUserService userService;
+public class RoleController {
+    private final IRoleService roleService;
     @Autowired
-    private UserMapper userMapper;
+    private RoleMapper roleMapper;
 
     @PostMapping
-    public ResponseEntity<?>createUser(@Valid @RequestBody UserDTO userDTO) throws Exception {
-        User user = userMapper.toEntity(userDTO);
-        userService.save(user);
-        UserDTO userResponseDTO=userMapper.toDTO(user);
-        return new ResponseEntity<>(userResponseDTO, HttpStatus.CREATED);
+    public ResponseEntity<?>createRole(@Valid @RequestBody RoleDTO roleDTO)throws Exception{
+        Role role = roleMapper.toEntity(roleDTO);
+        roleService.save(role);
+        RoleDTO roleResponseDTO = roleMapper.toDTO(role);
+        return new ResponseEntity<>(roleResponseDTO, HttpStatus.CREATED);
     }
 }
