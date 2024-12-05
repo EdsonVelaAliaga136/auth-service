@@ -1,5 +1,6 @@
 package com.evela.auth_service.security;
 
+import com.evela.common_service.audit.CustomAuditorAware;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -7,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +19,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-//Clase S5
 @Profile(value = {"development", "production"})
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
+
+    private final CustomAuditorAware auditorAware;
 
     //@Autowired
     private final JwtUserDetailsService jwtUserDetailsService;
@@ -63,6 +66,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);
+                auditorAware.setCurrentUsername(username);
             }
         }
         filterChain.doFilter(request, response);
@@ -76,4 +80,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         mapper.findAndRegisterModules();
         return mapper.writeValueAsString(object);
     }
+    /*
+    private String extractUsernameFromJwt(HttpServletRequest request){
+        return
+    }*/
 }

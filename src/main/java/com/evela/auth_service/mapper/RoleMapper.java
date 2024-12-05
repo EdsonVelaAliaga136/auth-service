@@ -13,17 +13,17 @@ import org.mapstruct.factory.Mappers;
 public interface RoleMapper {
     //RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
     //@IgnoreAuditMapping
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "version", ignore = true)
+    //@Mapping(target = "createdAt", ignore = true)
+    //@Mapping(target = "updatedAt", ignore = true)
+    //@Mapping(target = "version", ignore = true)
     //@Mapping(target = "active", ignore = true)
     RoleDTO toDTO(Role role);
     //@IgnoreAuditMapping
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
+    //@Mapping(target = "createdAt", ignore = true)
+    //@Mapping(target = "updatedAt", ignore = true)
     //@Mapping(target = "version", ignore = true)
-    @Mapping(target = "active", ignore = true)
-    @Mapping(target = "id", source = "roleId")
-    @Mapping(target = "roleId", source = "roleId")
+    //@Mapping(target = "active", ignore = true)
+    //@Mapping(target = "id", source = "roleId")
+    //@Mapping(target = "roleId", source = "roleId")
     Role toEntity(RoleDTO roleDTO);
 }

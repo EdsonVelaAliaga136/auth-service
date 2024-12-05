@@ -1,11 +1,13 @@
 package com.evela.auth_service.security;
 
+import com.evela.common_service.audit.CustomAuditorAware;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,7 +25,9 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 @Configuration
 @EnableWebSecurity
 //@RequiredArgsConstructor
-public class WebSecurityConfig {
+public class WebSecurityConfig{
+    //@Bean
+    //public AuditorAware<String>customAuditorAware(){return new CustomAuditorAware();}
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 

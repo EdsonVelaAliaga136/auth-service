@@ -28,8 +28,8 @@ public class RoleDTO extends BaseDTO<Long> {
     @Size(min = 3, max = 100, message = "El nombre del rol debe tener entre 3 y 100 caracteres")
     private String roleName;
 
-    @NotNull(message = "El estado activo no puede ser nulo")
-    private boolean active;
+    //@NotNull(message = "El estado activo no puede ser nulo")
+    //private boolean active;
 
     @NotNull(message = "La descripción no puede ser nula")
     @NotEmpty(message = "La descripción no puede estar vacía")
