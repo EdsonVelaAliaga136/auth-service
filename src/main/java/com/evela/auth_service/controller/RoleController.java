@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,13 +30,13 @@ public class RoleController {
     public ResponseEntity<List<RoleDTO>>findAllRole() throws Exception {
         List<RoleDTO> rolesDTO = roleService.findAll()
                 .stream()
-                .map(x->roleMapper.toDTO(x))
-                .collect(Collectors.toList());
+                .map(roleMapper::toDTO)
+                .toList();
         return new ResponseEntity<>(rolesDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?>createRole(@Valid @RequestBody RoleDTO roleDTO)throws Exception{
+    public ResponseEntity<RoleDTO>createRole(@Valid @RequestBody RoleDTO roleDTO)throws Exception{
         Role role = roleMapper.toEntity(roleDTO);
         role.setActive(true);
         roleService.save(role);
@@ -53,4 +54,20 @@ public class RoleController {
             throw new RuntimeException("Entity was updated concurrently. Please try again.", e);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RoleDTO> findById(@PathVariable("id") Long id) throws Exception {
+        RoleDTO roleDTO = roleMapper.toDTO(roleService.findById(id));
+        return new ResponseEntity<>(roleDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/date")
+    public ResponseEntity<List<RoleDTO>> findById(@RequestBody RoleDTO date) throws Exception {
+        List<RoleDTO> rolesDTO = roleService.findByCreatedByDate(date.getAuditMetadata().getCreatedAt())
+                .stream()
+                .map(roleMapper::toDTO)
+                .toList();
+        return new ResponseEntity<>(rolesDTO, HttpStatus.OK);
+    }
+
 }

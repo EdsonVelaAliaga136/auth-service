@@ -19,11 +19,12 @@ public interface UserMapper {
     @Mapping(target = "createdBy", source = "createdBy", ignore = true)
     @Mapping(target = "lastModifiedBy", source = "lastModifiedBy", ignore = true)
     @Mapping(target = "active", source = "active")*/
-    @IgnoreAuditMapping
+    //@IgnoreAuditMapping
     /*@Mapping(target = "roles[].createdAt", ignore = true)
     @Mapping(target = "roles[].updatedAt", ignore = true)
     @Mapping(target = "roles[].createdBy", ignore = true)
     @Mapping(target = "roles[].updatedBy", ignore = true)*/
+    @Mapping(target = "auditMetadata", source = "auditMetadata")
     UserDTO toDTO(User user);
 
     //@InheritInverseConfiguration
@@ -38,11 +39,12 @@ public interface UserMapper {
     @Mapping(target = "createdBy", source = "createdBy", ignore = true)
     @Mapping(target = "lastModifiedBy", source = "lastModifiedBy", ignore = true)
     @Mapping(target = "active", source = "active")*/
-    @IgnoreAuditMapping
+    //@IgnoreAuditMapping
     /*@Mapping(target = "roles[].createdAt", ignore = true)
     @Mapping(target = "roles[].updatedAt", ignore = true)
     @Mapping(target = "roles[].createdBy", ignore = true)
     @Mapping(target = "roles[].updatedBy", ignore = true)*/
+    @Mapping(target = "auditMetadata", source = "auditMetadata")
     User toEntity(UserDTO userDTO);
 
 }

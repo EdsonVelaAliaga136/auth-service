@@ -1,8 +1,10 @@
 package com.evela.auth_service.dto;
 
+import com.evela.common_service.dto.AuditMetadataDTO;
 import com.evela.common_service.dto.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -44,6 +46,9 @@ public class UserDTO extends BaseDTO<Long> {
     @NotNull(message = "El email no puede ser nulo")
     @Email(message = "El correo electrónico no es válido")
     private String email;
+
+    @Embedded
+    private AuditMetadataDTO auditMetadata;
 
     /*@NotNull(message = "El estado no puede ser nulo")
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)

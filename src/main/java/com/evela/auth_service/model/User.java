@@ -1,6 +1,8 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -39,9 +42,9 @@ public class User extends BaseEntity {
     @Email(message = "El correo electrónico no es válido")
     private String email;
 
-    @Column(nullable = false)
+    /*@Column(nullable = false)
     @NotNull(message = "El estado no puede ser nulo")
-    private Boolean active = true;
+    private Boolean active = true;*/
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -49,6 +52,16 @@ public class User extends BaseEntity {
                 inverseJoinColumns = @JoinColumn(name = "roleId"),
                 foreignKey = @ForeignKey(name = "user_role_fk"))
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Session> sessions;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ActivityLog> activityLogs;
+    @Embedded
+    private AuditMetadata auditMetadata;
 
     /*@Override
     public Long getId() {

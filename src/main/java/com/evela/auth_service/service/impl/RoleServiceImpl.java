@@ -8,6 +8,9 @@ import com.evela.common_service.service.impl.CRUDImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class RoleServiceImpl extends CRUDImpl<Role, Long> implements IRoleService {
@@ -16,5 +19,10 @@ public class RoleServiceImpl extends CRUDImpl<Role, Long> implements IRoleServic
     @Override
     protected IGenericRepo<Role, Long> getRepo() {
         return repo;
+    }
+
+    @Override
+    public List<Role> findByCreatedByDate(LocalDateTime date) {
+        return repo.findByCreatedByDate(date);
     }
 }

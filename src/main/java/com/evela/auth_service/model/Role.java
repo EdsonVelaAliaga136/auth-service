@@ -1,5 +1,6 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "roles")
-public class Role extends BaseEntity {
+public class Role extends BaseEntity{
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,15 @@ public class Role extends BaseEntity {
                 inverseJoinColumns = @JoinColumn(name = "menuId"),
                 foreignKey = @ForeignKey(name = "role_menu_fk"))
     private Set<Menu> menus;
+    @ManyToMany
+    @JoinTable(name = "role_permission",
+                joinColumns = @JoinColumn(name = "roleId"),
+                inverseJoinColumns = @JoinColumn(name = "permissionId"),
+                foreignKey = @ForeignKey(name = "role_permission_fk"))
+    private Set<Permission> permissions;
+
+    @Embedded
+    private AuditMetadata auditMetadata;
 
     /*@Override
     public Long getId() {

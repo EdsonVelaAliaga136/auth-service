@@ -1,8 +1,10 @@
 package com.evela.auth_service.dto;
 
+import com.evela.common_service.dto.AuditMetadataDTO;
 import com.evela.common_service.dto.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -35,4 +37,7 @@ public class RoleDTO extends BaseDTO<Long> {
     @NotEmpty(message = "La descripción no puede estar vacía")
     @Size(min = 5, max = 100, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String description;
+
+    @Embedded
+    private AuditMetadataDTO auditMetadata;
 }
