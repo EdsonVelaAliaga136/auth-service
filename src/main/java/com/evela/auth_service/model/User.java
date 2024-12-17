@@ -62,6 +62,8 @@ public class User extends BaseEntity {
     private List<ActivityLog> activityLogs;
     @Embedded
     private AuditMetadata auditMetadata;
+    @Column
+    private Boolean locked;
 
     /*@Override
     public Long getId() {

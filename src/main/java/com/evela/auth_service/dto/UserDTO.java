@@ -50,6 +50,8 @@ public class UserDTO extends BaseDTO<Long> {
     @Embedded
     private AuditMetadataDTO auditMetadata;
 
+    private Boolean locked;
+
     /*@NotNull(message = "El estado no puede ser nulo")
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean active;*/

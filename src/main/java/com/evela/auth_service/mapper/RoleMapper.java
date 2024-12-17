@@ -17,7 +17,7 @@ public interface RoleMapper {
     //@Mapping(target = "updatedAt", ignore = true)
     //@Mapping(target = "version", ignore = true)
     //@Mapping(target = "active", ignore = true)
-    @Mapping(source = "auditMetadata", target = "auditMetadata")
+    //@Mapping(source = "auditMetadata", target = "auditMetadata")
     RoleDTO toDTO(Role role);
     //@IgnoreAuditMapping
     //@Mapping(target = "createdAt", ignore = true)
@@ -26,6 +26,6 @@ public interface RoleMapper {
     //@Mapping(target = "active", ignore = true)
     //@Mapping(target = "id", source = "roleId")
     //@Mapping(target = "roleId", source = "roleId")
-    @Mapping(source = "auditMetadata", target = "auditMetadata")
+    //@Mapping(source = "auditMetadata", target = "auditMetadata")
     Role toEntity(RoleDTO roleDTO);
 }

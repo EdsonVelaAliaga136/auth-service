@@ -30,4 +30,6 @@ public class ActivityLog extends BaseEntity {
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    private String ipAddres;
+    private String status;
 }
