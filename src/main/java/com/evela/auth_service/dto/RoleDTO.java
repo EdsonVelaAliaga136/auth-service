@@ -2,8 +2,13 @@ package com.evela.auth_service.dto;
 
 import com.evela.common_service.dto.AuditMetadataDTO;
 import com.evela.common_service.dto.BaseDTO;
+import com.evela.common_service.enums.Status;
+import com.evela.common_service.enums.deserializer.GenericEnumDeserializer;
+import com.evela.common_service.enums.serializer.GenericEnumSerializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +43,16 @@ public class RoleDTO extends BaseDTO<Long> {
     @Size(min = 5, max = 100, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String description;
 
-    @Embedded
-    private AuditMetadataDTO auditMetadata;
+    //private Set<RolePermissionDTO> rolePermissions;
+
+    //private Set<UserRoleDTO> userRoles;
+
+    //private Set<MenuRoleDTO> menuRoles;
+
+    /*@Embedded
+    private AuditMetadataDTO auditMetadata;*/
+
+    @JsonDeserialize(using = GenericEnumDeserializer.class)
+    @JsonSerialize(using = GenericEnumSerializer.class)
+    private Status status;
 }

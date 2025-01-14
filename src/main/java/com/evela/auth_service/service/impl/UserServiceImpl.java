@@ -9,6 +9,8 @@ import com.evela.common_service.repository.IGenericRepo;
 import com.evela.common_service.service.impl.CRUDImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +21,11 @@ public class UserServiceImpl extends CRUDImpl<User, Long> implements IUserServic
     @Override
     protected IGenericRepo<User, Long> getRepo() {
         return repo;
+    }
+
+    @Override
+    public User findOneByUsername(String username) {
+        return repo.findOneByUsername(username);
     }
 
     /*@Override

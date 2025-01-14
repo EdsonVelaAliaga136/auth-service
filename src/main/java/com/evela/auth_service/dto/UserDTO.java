@@ -2,6 +2,7 @@ package com.evela.auth_service.dto;
 
 import com.evela.common_service.dto.AuditMetadataDTO;
 import com.evela.common_service.dto.BaseDTO;
+import com.evela.common_service.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Embedded;
@@ -51,6 +52,7 @@ public class UserDTO extends BaseDTO<Long> {
     private AuditMetadataDTO auditMetadata;
 
     private Boolean locked;
+    private UserStatus status;
 
     /*@NotNull(message = "El estado no puede ser nulo")
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)

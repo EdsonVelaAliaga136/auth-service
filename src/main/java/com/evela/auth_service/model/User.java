@@ -2,15 +2,13 @@ package com.evela.auth_service.model;
 
 import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
+import com.evela.common_service.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
@@ -46,12 +44,14 @@ public class User extends BaseEntity {
     @NotNull(message = "El estado no puede ser nulo")
     private Boolean active = true;*/
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
                 joinColumns = @JoinColumn(name = "userId"),
                 inverseJoinColumns = @JoinColumn(name = "roleId"),
                 foreignKey = @ForeignKey(name = "user_role_fk"))
-    private Set<Role> roles;
+    private Set<Role> roles;*/
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<UserRole> userRoles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -64,7 +64,9 @@ public class User extends BaseEntity {
     private AuditMetadata auditMetadata;
     @Column
     private Boolean locked;
-
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    private UserStatus status;
     /*@Override
     public Long getId() {
         return this.userId;

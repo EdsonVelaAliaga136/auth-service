@@ -2,6 +2,7 @@ package com.evela.auth_service.model;
 
 
 import com.evela.common_service.base.BaseEntity;
+import com.evela.common_service.enums.SessionStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -35,5 +36,8 @@ public class Session extends BaseEntity {
     private LocalDateTime logoutTime;
     @Column(nullable = false)
     private String ipAddress;
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    private SessionStatus status;
 
 }

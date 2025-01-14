@@ -1,6 +1,7 @@
 package com.evela.auth_service.model;
 
 import com.evela.common_service.base.BaseEntity;
+import com.evela.common_service.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,13 @@ public class Permission extends BaseEntity {
     private String name;
     @Column(nullable = false)
     private String description;
-    @ManyToMany(mappedBy = "permissions")
-    private Set<Role> roles;
+    // for many to many
+    //@ManyToMany(mappedBy = "permissions")
+    //private Set<Role> roles;
+    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RolePermission> rolePermissions;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
+    private Status status;
 
 }

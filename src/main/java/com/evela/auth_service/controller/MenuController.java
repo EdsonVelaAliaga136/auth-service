@@ -27,7 +27,7 @@ public class MenuController {
         List<MenuDTO> menuDTO = menuService.getMenuByUsername(username)
                 .stream()
                 .map(m->{
-                        m.setRoles(new HashSet<>());
+                        m.setMenuRoles(new HashSet<>());
                         return menuMapper.toDTO(m);
                 })
                 .collect(Collectors.toList());

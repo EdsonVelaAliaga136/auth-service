@@ -61,13 +61,13 @@ public class RoleController {
         return new ResponseEntity<>(roleDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/date")
+    /*@PostMapping("/date")
     public ResponseEntity<List<RoleDTO>> findById(@RequestBody RoleDTO date) throws Exception {
         List<RoleDTO> rolesDTO = roleService.findByCreatedByDate(date.getAuditMetadata().getCreatedAt())
                 .stream()
                 .map(roleMapper::toDTO)
                 .toList();
         return new ResponseEntity<>(rolesDTO, HttpStatus.OK);
-    }
+    }*/
 
 }

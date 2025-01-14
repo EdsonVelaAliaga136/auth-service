@@ -2,6 +2,7 @@ package com.evela.auth_service.model;
 
 
 import com.evela.common_service.base.BaseEntity;
+import com.evela.common_service.enums.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,9 @@ public class ActivityLog extends BaseEntity {
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private String ipAddres;
-    private String status;
+    @Column(name = "ip_address")
+    private String ipAddress;
+    /*@Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;*/
 }

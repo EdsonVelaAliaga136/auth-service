@@ -19,19 +19,21 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "menus")
 public class Menu extends BaseEntity {
-    @EqualsAndHashCode.Exclude
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long menuId;
-    @Column(nullable = false, unique = true, length = 200)
+    @Column(name = "menu_name",nullable = false, unique = true, length = 200)
     private String menuName;
 
-    @Column(nullable = false)
+    @Column(name = "url", nullable = false)
     private String url;
-    @Column
+    @Column(name = "icon")
     private String icon;
-    @ManyToMany(mappedBy = "menus")
-    private Set<Role> roles;
+    //@ManyToMany(mappedBy = "menus")
+    //private Set<Role> roles;
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<MenuRole> menuRoles;
     /*@ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "menu_permissions",
                         joinColumns = @JoinColumn(name = "menuId"))
