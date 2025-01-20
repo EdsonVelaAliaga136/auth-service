@@ -3,25 +3,34 @@ package com.evela.auth_service.mapper;
 import com.evela.auth_service.dto.RoleDTO;
 import com.evela.auth_service.model.Role;
 import com.evela.common_service.mapper.IgnoreAuditMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
-@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+import java.util.List;
+
+@Mapper(componentModel= MappingConstants.ComponentModel.SPRING,
+        //injectionStrategy = InjectionStrategy.SETTER,
+        uses = {RolePermissionMapper.class, UserRoleMapper.class, MenuRoleMapper.class})
+        //nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
+        //unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleMapper {
-    //RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
+    RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
+
     //@IgnoreAuditMapping
     //@Mapping(target = "createdAt", ignore = true)
     //@Mapping(target = "updatedAt", ignore = true)
     //@Mapping(target = "version", ignore = true)
     //@Mapping(target = "active", ignore = true)
-    //@Mapping(source = "auditMetadata", target = "auditMetadata")
     //@Mapping(target = "roleId", source = "roleId")
     //@Mapping(target = "roleName", source = "roleName")
     //@Mapping(target = "description", source = "description")
     //@Mapping(target = "active", source = "active")
+    @Mappings({
+            @Mapping(source = "auditMetadata", target = "auditMetadata")
+            //@Mappings(sou)
+    })
     RoleDTO toDTO(Role role);
     //@IgnoreAuditMapping
     //@Mapping(target = "createdAt", ignore = true)
@@ -34,5 +43,6 @@ public interface RoleMapper {
     @Mapping(target = "roleName", source = "roleName")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "active", source = "active")*/
+    @Mapping(source = "auditMetadata", target = "auditMetadata")
     Role toEntity(RoleDTO roleDTO);
 }

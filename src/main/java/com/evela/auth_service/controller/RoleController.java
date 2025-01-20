@@ -8,6 +8,7 @@ import com.evela.common_service.exception.OptimisticLockException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,13 @@ public class RoleController {
     private final IRoleService roleService;
 
     private final RoleMapper roleMapper;
-
+/*
+    @Autowired
+    public RoleController(IRoleService roleService, @Lazy RoleMapper roleMapper){
+        this.roleService = roleService;
+        this.roleMapper = roleMapper;
+    }
+*/
     @GetMapping
     public ResponseEntity<List<RoleDTO>>findAllRole() throws Exception {
         List<RoleDTO> rolesDTO = roleService.findAll()

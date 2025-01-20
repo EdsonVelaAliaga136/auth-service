@@ -43,14 +43,14 @@ public class RoleDTO extends BaseDTO<Long> {
     @Size(min = 5, max = 100, message = "La descripción debe tener entre 5 y 255 caracteres")
     private String description;
 
-    //private Set<RolePermissionDTO> rolePermissions;
+    private Set<RolePermissionDTO> rolePermissions;
 
-    //private Set<UserRoleDTO> userRoles;
+    private Set<UserRoleDTO> userRoles;
 
-    //private Set<MenuRoleDTO> menuRoles;
+    private Set<MenuRoleDTO> menuRoles;
 
-    /*@Embedded
-    private AuditMetadataDTO auditMetadata;*/
+    @Embedded
+    private AuditMetadataDTO auditMetadata;
 
     @JsonDeserialize(using = GenericEnumDeserializer.class)
     @JsonSerialize(using = GenericEnumSerializer.class)

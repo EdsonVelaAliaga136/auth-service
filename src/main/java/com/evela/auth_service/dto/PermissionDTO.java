@@ -17,6 +17,6 @@ public class PermissionDTO extends BaseDTO<Long> {
     private Long permissionId;
     private String name;
     private String description;
-    private Set<RolePermissionDTO> rolePermission;
+    private Set<RolePermissionDTO> rolePermissions;
     private Status status;
 }

@@ -30,18 +30,18 @@
         <java.version>21</java.version>
     </properties>
     <dependencies>
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        </dependency-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -71,27 +71,27 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>3.1.1</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.14</version>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
+        </dependency-->
 
         <!-- Validators -->
-        <dependency>
+        <!--dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
+        </dependency-->
         <!-- JWT Tokens * -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -135,11 +135,11 @@
             <version>0.0.1</version>
         </dependency>
         <!-- MapStruct Core -->
-        <dependency>
+        <!--dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.6.3</version> <!-- Asegúrate de usar una versión compatible con Java 21 -->
-        </dependency>
+            <version>1.6.3</version>
+        </dependency-->
 
         <!-- MapStruct Processor (compilación) -->
         <dependency>
@@ -149,8 +149,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-
     <build>
         <plugins>
             <plugin>
@@ -173,6 +171,18 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <compilerArgs>
+                        <!--<arg>-Werror</arg>-->
+                        <arg>
+                            -Amapstruct.suppressGeneratorTimestamp=true
+                        </arg>
+                        <arg>
+                            -Amapstruct.suppressGeneratorVersionInfoComment=true
+                        </arg>
+                        <arg>
+                            -Amapstruct.verbose=true
+                        </arg>
+                    </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -184,11 +194,16 @@
                             <artifactId>lombok</artifactId>
                             <version>1.18.30</version>
                         </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
                     </annotationProcessorPaths>
+                    <failOnError>true</failOnError>
+                    <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
-
 </project>
