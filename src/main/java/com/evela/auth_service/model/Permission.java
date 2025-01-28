@@ -30,7 +30,7 @@ public class Permission extends BaseEntity {
     // for many to many
     //@ManyToMany(mappedBy = "permissions")
     //private Set<Role> roles;
-    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<RolePermission> rolePermissions;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")

@@ -50,7 +50,7 @@ public class User extends BaseEntity {
                 inverseJoinColumns = @JoinColumn(name = "roleId"),
                 foreignKey = @ForeignKey(name = "user_role_fk"))
     private Set<Role> roles;*/
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

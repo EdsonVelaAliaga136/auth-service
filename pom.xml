@@ -172,6 +172,7 @@
                     <source>21</source>
                     <target>21</target>
                     <compilerArgs>
+                        <!--<arg>-implicit:class</arg>-->
                         <!--<arg>-Werror</arg>-->
                         <arg>
                             -Amapstruct.suppressGeneratorTimestamp=true
