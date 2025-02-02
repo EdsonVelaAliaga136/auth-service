@@ -32,12 +32,14 @@ public class Session extends BaseEntity {
     private User user;
     @Column(nullable = false)
     private LocalDateTime loginTime;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime logoutTime;
     @Column(nullable = false)
     private String ipAddress;
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private SessionStatus status;
+    /*@Column(name = "token")
+    private String token;*/
 
 }

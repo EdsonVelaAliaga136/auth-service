@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SessionDTO extends BaseDTO<Long> {
-    private Long sessionID;
+    private Long sessionId;
     private UserDTO user;
     private LocalDateTime loginTime;
     private LocalDateTime logoutTime;
     private SessionStatus status;
+    private String ipAddress;
 }

@@ -16,6 +16,7 @@ import java.util.List;
 @Mapper(componentModel= MappingConstants.ComponentModel.SPRING,
         //injectionStrategy = InjectionStrategy.SETTER,
         //uses = {CycleAvoidingMappingContext.class})
+         unmappedTargetPolicy = ReportingPolicy.IGNORE ,
         uses = {RolePermissionMapper.class, UserRoleMapper.class, MenuRoleMapper.class})
         //nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
         //unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -53,6 +54,7 @@ public interface RoleMapper {
     @Mapping(target = "userRoles", ignore = true)
     @Mapping(target = "menuRoles", ignore = true)
     @Mapping(target = "rolePermissions", ignore = true)
+    //@Mapping(target = "version", ignore = true)
     Role toEntity(RoleDTO roleDTO, @Context RolePermissionMapper rolePermissionMapper);
 
 }
