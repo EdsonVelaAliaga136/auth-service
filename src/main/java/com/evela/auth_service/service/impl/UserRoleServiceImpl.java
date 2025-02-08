@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserRoleServiceImpl extends CRUDImpl<UserRole, Long> implements IUserRoleService {
@@ -17,5 +19,10 @@ public class UserRoleServiceImpl extends CRUDImpl<UserRole, Long> implements IUs
     @Override
     protected IGenericRepo<UserRole, Long> getRepo() {
         return repo;
+    }
+
+    @Override
+    public List<UserRole> findByUserId(Long userId) {
+        return repo.findByUser_UserId(userId);
     }
 }

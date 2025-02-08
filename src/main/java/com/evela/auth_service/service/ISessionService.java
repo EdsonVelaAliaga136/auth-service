@@ -11,6 +11,8 @@ import java.util.List;
 public interface ISessionService extends ICRUD<Session, Long> {
     Session saveSessionLogin(User user, HttpServletRequest request);
     Session saveSessionLogout(Long sessionId);
-    boolean closeSessions(User user);
-    List<Session> findByUser_UserIdAndSessionStatus(Long userId, SessionStatus sessionStatus);
+    void closeSessionsByUser(User user);
+    List<Session> findSessionByUserAndStatus(Long userId, SessionStatus sessionStatus);
+    List<Session> findSessionsByStatus(SessionStatus sessionStatus);
+    Session closeSessionById(Session session);
 }

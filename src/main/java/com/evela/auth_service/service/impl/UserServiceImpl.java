@@ -9,6 +9,7 @@ import com.evela.auth_service.util.PasswordUtils;
 import com.evela.common_service.enums.UserStatus;
 import com.evela.common_service.repository.IGenericRepo;
 import com.evela.common_service.service.impl.CRUDImpl;
+import com.evela.common_service.util.LoggerUtils;
 import com.evela.common_service.validator.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,15 +50,17 @@ public class UserServiceImpl extends CRUDImpl<User, Long> implements IUserServic
     }
 
     @Override
-    public boolean deactivateUser(Long id) throws Exception {
+    public User deactivateUser(Long id) throws Exception {
         User user = this.findById(id);
         if(ValidationUtils.isNotNull(user)){
           user.setActive(false);
           user.setStatus(UserStatus.DELETED);
           this.save(user);
-          return true;
+            LoggerUtils.logInfo("User with id: " + id + " has been deactivated");
+          return user;
         }
-        return false;
+        LoggerUtils.logInfo("User with id: " + id + " does not exist");
+        return null;
     }
 
     /*@Override

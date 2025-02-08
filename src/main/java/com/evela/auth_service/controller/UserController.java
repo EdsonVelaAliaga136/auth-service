@@ -1,14 +1,12 @@
 package com.evela.auth_service.controller;
 
 import com.evela.auth_service.dto.UserDTO;
-import com.evela.auth_service.dto.UserRoleDTO;
 import com.evela.auth_service.exception.UserAlreadyExistsException;
 import com.evela.auth_service.mapper.UserMapper;
 import com.evela.auth_service.model.User;
-import com.evela.auth_service.model.UserRole;
 import com.evela.auth_service.service.ISessionService;
 import com.evela.auth_service.service.IUserService;
-import com.evela.common_service.util.LoggerUtils;
+import com.evela.common_service.validator.ValidationUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,12 +74,11 @@ public class UserController {
     }
     @PostMapping("/{id}")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") Long id) throws Exception {
-        userService.deactivateUser(id);
-        sessionService.
-        if(){
-            return ResponseEntity<>
+        User user = userService.deactivateUser(id);
+        if (ValidationUtils.isNotNull(user)){
+            sessionService.closeSessionsByUser(user);
         }
-
+        UserDTO userDTO = userMapper.toDTO(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 }

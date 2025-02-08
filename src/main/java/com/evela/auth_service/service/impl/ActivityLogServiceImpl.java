@@ -8,6 +8,8 @@ import com.evela.common_service.service.impl.CRUDImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ActivityLogServiceImpl extends CRUDImpl<ActivityLog, Long> implements IActivityLogService {
@@ -16,5 +18,10 @@ public class ActivityLogServiceImpl extends CRUDImpl<ActivityLog, Long> implemen
     @Override
     protected IGenericRepo<ActivityLog, Long> getRepo() {
         return repo;
+    }
+
+    @Override
+    public List<ActivityLog> findByUser_UserId(Long userId) {
+        return List.of();
     }
 }
