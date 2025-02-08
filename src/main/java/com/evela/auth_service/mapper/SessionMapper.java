@@ -21,6 +21,6 @@ public interface SessionMapper {
 
     @Mapping(target = "version", ignore = true)
     //@Mapping(target = "user.version", ignore = true)
-    @Mapping(target = "user.auditMetadata", ignore = true)
+    //@Mapping(target = "user.auditMetadata", ignore = true)
     Session toEntity(SessionDTO session);
 }

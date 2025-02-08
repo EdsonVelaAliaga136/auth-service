@@ -1,5 +1,7 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.audit.Auditable;
+import com.evela.common_service.base.AuditListener;
 import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
 import jakarta.persistence.*;
@@ -18,7 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "menus")
-public class Menu extends BaseEntity {
+@EntityListeners(AuditListener.class)
+public class Menu extends BaseEntity implements Auditable {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

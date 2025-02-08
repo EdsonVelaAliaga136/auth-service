@@ -1,5 +1,7 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.audit.Auditable;
+import com.evela.common_service.base.AuditListener;
 import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
 import com.evela.common_service.enums.UserStatus;
@@ -9,7 +11,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -19,8 +27,10 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 //@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class) // Añadir esta línea
+@EntityListeners(AuditListener.class)
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Auditable {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,8 +70,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<ActivityLog> activityLogs;
+
     @Embedded
     private AuditMetadata auditMetadata;
+
     @Column
     private Boolean locked;
     @Column(name = "status")

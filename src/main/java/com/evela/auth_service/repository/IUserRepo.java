@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 //@Repository
 public interface IUserRepo extends IGenericRepo<User, Long> {
     User findOneByUsername(String username);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }

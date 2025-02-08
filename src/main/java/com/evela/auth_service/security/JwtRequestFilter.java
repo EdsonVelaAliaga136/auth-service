@@ -24,7 +24,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private final CustomAuditorAware auditorAware;
+    //private final CustomAuditorAware auditorAware;
 
     //@Autowired
     private final JwtUserDetailsService jwtUserDetailsService;
@@ -66,7 +66,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);
-                auditorAware.setCurrentUsername(username);
+                //auditorAware.setCurrentUsername(username);
             }
         }
         filterChain.doFilter(request, response);

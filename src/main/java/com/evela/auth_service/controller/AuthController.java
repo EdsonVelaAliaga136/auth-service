@@ -23,6 +23,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,15 +41,23 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<UserSessionDTO> login(@RequestBody JwtRequest jwtRequest, HttpServletRequest request)throws Exception {
-        authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
-        final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        jwtRequest.getUsername(), jwtRequest.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtTokenUtil.generateToken(authentication);
+        //authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
+        //final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
+        //final String token = jwtTokenUtil.generateToken(userDetails);
         Session session = sessionService.saveSessionLogin(userService.findOneByUsername(jwtRequest.getUsername()), request);
         JwtResponse jwtResponse = new JwtResponse(token);
         UserSessionDTO userSessionDTO = new UserSessionDTO(jwtResponse.getJwtToken(), sessionMapper.toDTO(session));
         return new ResponseEntity<>(userSessionDTO, HttpStatus.OK);
         //return ResponseEntity.ok(new JwtResponse(token));
     }
+
     @PostMapping("/logout")
     public ResponseEntity<UserSessionDTO> logout(@RequestBody UserSessionDTO userSessionDTO)throws Exception {
         Session session = sessionService.saveSessionLogout(userSessionDTO.getSession().getSessionId());

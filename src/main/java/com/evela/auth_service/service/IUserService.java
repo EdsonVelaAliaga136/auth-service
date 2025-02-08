@@ -8,5 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IUserService extends ICRUD<User, Long> {
     User findOneByUsername(String username);
+    User registerUser(User user) throws Exception;
     //UserDTO getUserDTO(User user);
+    boolean deactivateUser(Long id) throws Exception;
 }

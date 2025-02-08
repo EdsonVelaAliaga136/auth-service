@@ -23,25 +23,24 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO extends BaseDTO<Long> {
-    @NotNull(message = "El ID del user no puede ser nulo")
+
+    //@NotNull(message = "El ID del user no puede ser nulo")
     private Long userId;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
     @Size(min = 3, max = 50, message = "El nombre de usuario debe tener entre 3 y 50 caracteres")
-    //@JsonIncludeProperties(value = {"name"})
-    private Set<RoleDTO> roles;
-
-    @NotEmpty
-    @NotNull(message = "La contraseña no puede ser nula")
-    @Size(min = 6, max = 60, message = "La contraseña debe tener entre 6 y 60 caracteres")
     @JsonProperty(value = "user_name")
     private String username;
+
+    //@JsonIncludeProperties(value = {"name"})
+    private Set<RoleDTO> roles;
 
     @NotNull
     @NotEmpty
     @Size(min = 10, max = 60)
-    //@JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull(message = "La contraseña no puede ser nula")
+    @Size(min = 6, max = 60, message = "La contraseña debe tener entre 6 y 60 caracteres")
     private String password;
 
     @NotNull(message = "El email no puede ser nulo")

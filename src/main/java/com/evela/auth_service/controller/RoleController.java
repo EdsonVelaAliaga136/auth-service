@@ -1,10 +1,14 @@
 package com.evela.auth_service.controller;
 
 import com.evela.auth_service.dto.RoleDTO;
+import com.evela.auth_service.dto.UserRoleDTO;
 import com.evela.auth_service.mapper.RoleMapper;
 import com.evela.auth_service.mapper.RolePermissionMapper;
+import com.evela.auth_service.mapper.UserRoleMapper;
 import com.evela.auth_service.model.Role;
+import com.evela.auth_service.model.UserRole;
 import com.evela.auth_service.service.IRoleService;
+import com.evela.auth_service.service.IUserRoleService;
 import com.evela.common_service.exception.OptimisticLockException;
 import com.evela.common_service.mapper.CycleAvoidingMappingContext;
 import jakarta.validation.Valid;
@@ -30,6 +34,7 @@ public class RoleController {
     private final RoleMapper roleMapper;
 
     private final RolePermissionMapper rolePermissionMapper;
+
 /*
     @Autowired
     public RoleController(IRoleService roleService, @Lazy RoleMapper roleMapper){

@@ -1,5 +1,7 @@
 package com.evela.auth_service.model;
 
+import com.evela.common_service.audit.Auditable;
+import com.evela.common_service.base.AuditListener;
 import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
 import com.evela.common_service.enums.Status;
@@ -17,7 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "roles")
-public class Role extends BaseEntity{
+@EntityListeners(AuditListener.class)
+public class Role extends BaseEntity implements Auditable {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

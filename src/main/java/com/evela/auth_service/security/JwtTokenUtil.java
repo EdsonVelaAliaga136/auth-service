@@ -1,11 +1,13 @@
 package com.evela.auth_service.security;
 
+import com.evela.auth_service.exception.AuthExceptionHandler;
 import com.evela.common_service.util.JwtUtilInterface;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -34,7 +36,17 @@ public class JwtTokenUtil implements Serializable, JwtUtilInterface {
         //claims.put("test", "value test"); Agregar valores al token
         return doGenerateToken(claims, userDetails.getUsername());
     }
-
+    public String generateToken(Authentication authentication){
+        String username = authentication.getName();
+        Date now = new Date();
+        Date expityDate = new Date(now.getTime()+jwtExpirationMs);
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(expityDate)
+                .signWith(getSigningKey())
+                .compact();
+    }
     public String doGenerateToken(Map<String, Object> claims, String subject){
          Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
         return Jwts.builder()
@@ -80,6 +92,7 @@ public class JwtTokenUtil implements Serializable, JwtUtilInterface {
         final String username = getUsernameFromToken(token);
         return (username.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
     @Override
      public String extractUsername(String token) {
         Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());

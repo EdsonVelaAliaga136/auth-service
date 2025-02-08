@@ -53,4 +53,11 @@ public class SessionServiceImpl extends CRUDImpl<Session, Long> implements ISess
         }
         return null;
     }
+
+    @Override
+    public boolean closeSessions(User user) {
+        //List<>
+        return false;
+    }
+
 }
