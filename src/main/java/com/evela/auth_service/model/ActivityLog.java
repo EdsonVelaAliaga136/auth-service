@@ -36,4 +36,7 @@ public class ActivityLog extends BaseEntity {
     /*@Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;*/
+    /*@OneToOne
+    @JoinColumn(name = "session_id")
+    private Session session;*/
 }

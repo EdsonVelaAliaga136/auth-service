@@ -1,10 +1,12 @@
 package com.evela.auth_service.service.impl;
 
+import com.evela.auth_service.model.AuthToken;
 import com.evela.auth_service.model.Session;
 import com.evela.auth_service.model.User;
 import com.evela.auth_service.repository.ISessionRepo;
+import com.evela.auth_service.service.IAuthTokenService;
 import com.evela.auth_service.service.ISessionService;
-import com.evela.common_service.enums.SessionStatus;
+import com.evela.auth_service.enums.SessionStatus;
 import com.evela.common_service.repository.IGenericRepo;
 import com.evela.common_service.service.impl.CRUDImpl;
 import com.evela.common_service.util.DateUtils;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class SessionServiceImpl extends CRUDImpl<Session, Long> implements ISessionService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionServiceImpl.class);
     private final ISessionRepo repo;
+    private final IAuthTokenService authTokenService;
 
     @Override
     protected IGenericRepo<Session, Long> getRepo() {
@@ -30,7 +33,7 @@ public class SessionServiceImpl extends CRUDImpl<Session, Long> implements ISess
     }
 
     @Override
-    public Session saveSessionLogin(User user, HttpServletRequest request) {
+    public Session saveSessionLogin(User user, String token, HttpServletRequest request) throws Exception {
         Session session = new Session();
         String ipAddress = IpUtils.getCLientIp(request);
         session.setIpAddress(ipAddress);
@@ -39,6 +42,7 @@ public class SessionServiceImpl extends CRUDImpl<Session, Long> implements ISess
         session.setStatus(SessionStatus.ACTIVE);
         session.setActive(true);
         //session.setVersion(0L);
+        session.setAuthToken(authTokenService.saveAuthToken(token));
         session = repo.save(session);
         LOGGER.info("Session created: {} of user: {}", session.getSessionId(), user.getUsername());
         return session;
@@ -61,7 +65,7 @@ public class SessionServiceImpl extends CRUDImpl<Session, Long> implements ISess
 
     @Override
     public void closeSessionsByUser(User user) {
-        List<Session> lstSessionUser = this.findSessionByUserAndStatus(user.getUserId(), SessionStatus.ACTIVE);
+        List<Session> lstSessionUser = this.findSessionByUserAndStatus(user, SessionStatus.ACTIVE);
         if (!lstSessionUser.isEmpty()){
             for(Session session : lstSessionUser){
                this.saveSessionLogout(session.getSessionId());
@@ -74,8 +78,8 @@ public class SessionServiceImpl extends CRUDImpl<Session, Long> implements ISess
     }
 
     @Override
-    public List<Session> findSessionByUserAndStatus(Long userId, SessionStatus sessionStatus) {
-        return this.repo.findSessionByUserAndStatus(userId, sessionStatus.getValue());
+    public List<Session> findSessionByUserAndStatus(User user, SessionStatus sessionStatus) {
+        return this.repo.findSessionByUserAndStatus(user, sessionStatus.getValue());
     }
 
     @Override

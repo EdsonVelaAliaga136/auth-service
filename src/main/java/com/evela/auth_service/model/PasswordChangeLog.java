@@ -1,7 +1,7 @@
 package com.evela.auth_service.model;
 
+
 import com.evela.common_service.base.BaseEntity;
-import com.evela.common_service.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,35 +11,31 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
-
+@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-@Table(name = "permissions")
-public class Permission extends BaseEntity {
-    @EqualsAndHashCode.Include
+@Table(name = "password_changed_logs")
+@EntityListeners(AuditingEntityListener.class)
+public class PasswordChangeLog extends BaseEntity {
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long permissionId;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String description;
-    // for many to many
-    //@ManyToMany(mappedBy = "permissions")
-    //private Set<Role> roles;
-    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<RolePermission> rolePermissions;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status")
-    private Status status;
+    private Long passwordChangeLogId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    @Column(name = "ipAddress", nullable = false)
+    private String ipAddress;
+    @Column(name = "oldPassword", nullable = false)
+    private String oldPassword;
+    @Column(name = "newPassword", nullable = false)
+    private String newPassword;
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, updatable = false)
@@ -56,5 +52,4 @@ public class Permission extends BaseEntity {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedOn;
-
 }

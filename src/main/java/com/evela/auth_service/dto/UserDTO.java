@@ -2,7 +2,7 @@ package com.evela.auth_service.dto;
 
 import com.evela.common_service.dto.AuditMetadataDTO;
 import com.evela.common_service.dto.BaseDTO;
-import com.evela.common_service.enums.UserStatus;
+import com.evela.auth_service.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Embedded;
@@ -37,7 +37,7 @@ public class UserDTO extends BaseDTO<Long> {
 
     @NotNull
     @NotEmpty
-    @Size(min = 10, max = 60)
+    //@Size(min = 10, max = 60)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull(message = "La contraseña no puede ser nula")
     @Size(min = 6, max = 60, message = "La contraseña debe tener entre 6 y 60 caracteres")
@@ -47,8 +47,8 @@ public class UserDTO extends BaseDTO<Long> {
     @Email(message = "El correo electrónico no es válido")
     private String email;
 
-    @Embedded
-    private AuditMetadataDTO auditMetadata;
+    //@Embedded
+    //private AuditMetadataDTO auditMetadata;
 
     private Boolean locked;
     private UserStatus status;

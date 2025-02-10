@@ -33,7 +33,7 @@ public interface RoleMapper {
     //@Mapping(target = "description", source = "description")
     //@Mapping(target = "active", source = "active")
     //@Mapping(source = "auditMetadata", target = "auditMetadata")
-    @Mapping(target = "auditMetadata", ignore = true)
+    //@Mapping(target = "auditMetadata", ignore = true)
     @Mapping(target = "userRoles", ignore = true)
     @Mapping(target = "menuRoles", ignore = true)
     @Mapping(target = "rolePermissions", ignore = true)
@@ -50,7 +50,8 @@ public interface RoleMapper {
     @Mapping(target = "description", source = "description")
     @Mapping(target = "active", source = "active")*/
     //@Mapping(source = "auditMetadata", target = "auditMetadata")
-    @Mapping(target = "auditMetadata", ignore = true)
+    //@Mapping(target = "auditMetadata", ignore = true)
+    @IgnoreAuditMapping
     @Mapping(target = "userRoles", ignore = true)
     @Mapping(target = "menuRoles", ignore = true)
     @Mapping(target = "rolePermissions", ignore = true)

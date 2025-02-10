@@ -1,6 +1,6 @@
 package com.evela.auth_service.service;
 
-import com.evela.auth_service.util.LoggerUser;
+import com.evela.auth_service.audit.LoggerUser;
 import com.evela.common_service.context.AuditContext;
 import com.evela.common_service.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;

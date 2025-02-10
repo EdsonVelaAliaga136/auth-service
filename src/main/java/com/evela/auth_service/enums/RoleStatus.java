@@ -1,4 +1,4 @@
-package com.evela.common_service.enums;
+package com.evela.auth_service.enums;
 
 public enum RoleStatus {
 

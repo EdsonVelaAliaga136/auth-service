@@ -4,7 +4,7 @@ import com.evela.auth_service.dto.SessionDTO;
 import com.evela.auth_service.mapper.SessionMapper;
 import com.evela.auth_service.model.Session;
 import com.evela.auth_service.service.ISessionService;
-import com.evela.common_service.enums.SessionStatus;
+import com.evela.auth_service.enums.SessionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

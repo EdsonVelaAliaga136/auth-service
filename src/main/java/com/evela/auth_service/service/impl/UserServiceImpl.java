@@ -6,7 +6,7 @@ import com.evela.auth_service.model.User;
 import com.evela.auth_service.repository.IUserRepo;
 import com.evela.auth_service.service.IUserService;
 import com.evela.auth_service.util.PasswordUtils;
-import com.evela.common_service.enums.UserStatus;
+import com.evela.auth_service.enums.UserStatus;
 import com.evela.common_service.repository.IGenericRepo;
 import com.evela.common_service.service.impl.CRUDImpl;
 import com.evela.common_service.util.LoggerUtils;

@@ -1,4 +1,4 @@
-package com.evela.auth_service.util;
+package com.evela.auth_service.audit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

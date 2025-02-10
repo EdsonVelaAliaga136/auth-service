@@ -1,11 +1,13 @@
-package com.evela.common_service.enums;
+package com.evela.auth_service.enums;
 
+import com.evela.common_service.enums.EnumWithCustomValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum UserStatus {
+public enum UserStatus implements EnumWithCustomValue<Integer> {
+    UNDEFINED(0,"Undefined"),
     REGISTERED(1,"Registered"),
     MODIFIED(2,"Modified"),
     CONFIRMED(3,"Confirmed"),

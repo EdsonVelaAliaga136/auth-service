@@ -10,7 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -20,7 +25,7 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "roles")
 @EntityListeners(AuditListener.class)
-public class Role extends BaseEntity implements Auditable {
+public class Role extends BaseEntity {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,8 +59,8 @@ public class Role extends BaseEntity implements Auditable {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<MenuRole> menuRoles;
 
-    @Embedded
-    private AuditMetadata auditMetadata;
+    /*@Embedded
+    private AuditMetadata auditMetadata;*/
 
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
@@ -65,4 +70,19 @@ public class Role extends BaseEntity implements Auditable {
     public Long getId() {
         return this.roleId;
     }*/
+    @CreatedBy
+    @Column(name = "created_by", nullable = false, updatable = false)
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdOn;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedOn;
 }

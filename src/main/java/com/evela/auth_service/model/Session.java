@@ -2,7 +2,7 @@ package com.evela.auth_service.model;
 
 
 import com.evela.common_service.base.BaseEntity;
-import com.evela.common_service.enums.SessionStatus;
+import com.evela.auth_service.enums.SessionStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -39,7 +39,10 @@ public class Session extends BaseEntity {
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private SessionStatus status;
-    /*@Column(name = "token")
-    private String token;*/
+
+    @OneToOne(mappedBy = "session",cascade = CascadeType.ALL)
+    private AuthToken authToken;
+
+
 
 }

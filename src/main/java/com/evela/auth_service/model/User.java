@@ -1,10 +1,9 @@
 package com.evela.auth_service.model;
 
-import com.evela.common_service.audit.Auditable;
 import com.evela.common_service.base.AuditListener;
 import com.evela.common_service.base.AuditMetadata;
 import com.evela.common_service.base.BaseEntity;
-import com.evela.common_service.enums.UserStatus;
+import com.evela.auth_service.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -15,10 +14,12 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Auditable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Data
@@ -27,10 +28,10 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 //@EntityListeners(AuditingEntityListener.class)
-//@EntityListeners(AuditingEntityListener.class) // Añadir esta línea
-@EntityListeners(AuditListener.class)
+@EntityListeners(AuditingEntityListener.class) // Añadir esta línea
+//@EntityListeners(AuditListener.class)
 @Table(name = "users")
-public class User extends BaseEntity implements Auditable {
+public class User extends BaseEntity{
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +50,9 @@ public class User extends BaseEntity implements Auditable {
     @NotNull(message = "El email no puede ser nulo")
     @Email(message = "El correo electrónico no es válido")
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PasswordChangeLog> passwordChangeLogs;
 
     /*@Column(nullable = false)
     @NotNull(message = "El estado no puede ser nulo")
@@ -71,14 +75,72 @@ public class User extends BaseEntity implements Auditable {
     @JsonManagedReference
     private List<ActivityLog> activityLogs;
 
-    @Embedded
-    private AuditMetadata auditMetadata;
+    /*@Embedded
+    private AuditMetadata auditMetadata;*/
 
     @Column
     private Boolean locked;
+
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private UserStatus status;
+
+    @CreatedBy
+    @Column(name = "created_by", nullable = false, updatable = false)
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdOn;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedOn;
+/*
+    @Override
+    public Optional<String> getCreatedBy() {
+        return Optional.ofNullable(createdBy);
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public Optional<LocalDateTime> getCreatedDate() {
+        return Optional.ofNullable(createdOn);
+    }
+
+    @Override
+    public void setCreatedDate(LocalDateTime creationDate) {
+        this.createdOn = creationDate;
+    }
+
+    @Override
+    public Optional<String> getLastModifiedBy() {
+        return Optional.ofNullable(updatedBy);
+    }
+
+    @Override
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.updatedBy = lastModifiedBy;
+    }
+
+    @Override
+    public Optional<LocalDateTime> getLastModifiedDate() {
+        return Optional.ofNullable(updatedOn);
+    }
+
+    @Override
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.updatedOn = lastModifiedDate;
+    }
+
     /*@Override
     public Long getId() {
         return this.userId;

@@ -15,7 +15,7 @@ public interface SessionMapper {
     SessionMapper INSTANCE = Mappers.getMapper(SessionMapper.class);
 
     //@Mapping(target = "version", ignore = true)
-    @Mapping(target = "user.auditMetadata", ignore = true)
+    //@Mapping(target = "user.auditMetadata", ignore = true)
     //@Mapping(target = "user.version", ignore = true)
     SessionDTO toDTO(Session session);
 

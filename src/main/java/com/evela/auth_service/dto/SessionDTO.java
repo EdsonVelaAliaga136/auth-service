@@ -1,7 +1,7 @@
 package com.evela.auth_service.dto;
 
 import com.evela.common_service.dto.BaseDTO;
-import com.evela.common_service.enums.SessionStatus;
+import com.evela.auth_service.enums.SessionStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +20,5 @@ public class SessionDTO extends BaseDTO<Long> {
     private LocalDateTime logoutTime;
     private SessionStatus status;
     private String ipAddress;
+    private AuthTokenDTO authToken;
 }

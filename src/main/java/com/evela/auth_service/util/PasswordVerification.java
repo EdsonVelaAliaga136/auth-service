@@ -11,7 +11,8 @@ public class PasswordVerification {
         String rawPassword = "admin123";
 
         // La contraseña cifrada almacenada en la base de datos (generada previamente)
-        String encodedPassword = "$2a$10$A8mPYpz5FwMhWBHBrwpV.eyAq.mjuaXB2poO4J.SXw/3l4T/Zy6EO";
+        //String encodedPassword = "$2a$10$A8mPYpz5FwMhWBHBrwpV.eyAq.mjuaXB2poO4J.SXw/3l4T/Zy6EO";
+        String encodedPassword = "$2a$10$iGps2aYyi9DI1/RH270eFuw4f2YwpSV9x2pEs3aXFQyFvOfsUmqT6";
 
         // Verificar si la contraseña ingresada coincide con la almacenada
         boolean matches = encoder.matches(rawPassword, encodedPassword);

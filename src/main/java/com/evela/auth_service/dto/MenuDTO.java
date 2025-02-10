@@ -3,7 +3,7 @@ package com.evela.auth_service.dto;
 import com.evela.auth_service.model.Role;
 import com.evela.common_service.dto.AuditMetadataDTO;
 import com.evela.common_service.dto.BaseDTO;
-import com.evela.common_service.enums.SessionStatus;
+import com.evela.auth_service.enums.SessionStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

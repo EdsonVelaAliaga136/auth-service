@@ -9,12 +9,14 @@ import com.evela.auth_service.security.JwtRequest;
 import com.evela.auth_service.security.JwtResponse;
 import com.evela.auth_service.security.JwtTokenUtil;
 import com.evela.auth_service.security.JwtUserDetailsService;
+import com.evela.auth_service.service.IAuthTokenService;
 import com.evela.auth_service.service.ISessionService;
 import com.evela.auth_service.service.IUserService;
-import com.evela.common_service.enums.SessionStatus;
+import com.evela.auth_service.enums.SessionStatus;
 import com.evela.common_service.enums.Status;
 import com.evela.common_service.util.DateUtils;
 import com.evela.common_service.util.IpUtils;
+import com.evela.common_service.util.LoggerUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,21 +42,15 @@ public class AuthController {
     private final SessionMapper sessionMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<UserSessionDTO> login(@RequestBody JwtRequest jwtRequest, HttpServletRequest request)throws Exception {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        jwtRequest.getUsername(), jwtRequest.getPassword()
-                )
-        );
+    public ResponseEntity<SessionDTO> login(@RequestBody JwtRequest jwtRequest, HttpServletRequest request)throws Exception {
+        Authentication authentication = authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtTokenUtil.generateToken(authentication);
-        //authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
-        //final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
-        //final String token = jwtTokenUtil.generateToken(userDetails);
-        Session session = sessionService.saveSessionLogin(userService.findOneByUsername(jwtRequest.getUsername()), request);
+        final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
+        Session session = sessionService.saveSessionLogin(userService.findOneByUsername(jwtRequest.getUsername()), token, request);
         JwtResponse jwtResponse = new JwtResponse(token);
-        UserSessionDTO userSessionDTO = new UserSessionDTO(jwtResponse.getJwtToken(), sessionMapper.toDTO(session));
-        return new ResponseEntity<>(userSessionDTO, HttpStatus.OK);
+        SessionDTO sessionDTO = sessionMapper.toDTO(session);
+        return new ResponseEntity<>(sessionDTO, HttpStatus.OK);
         //return ResponseEntity.ok(new JwtResponse(token));
     }
 
@@ -66,9 +62,9 @@ public class AuthController {
         //return ResponseEntity.ok(new JwtResponse(token));
     }
 
-     private void authenticate(String username, String password) throws Exception {
+     private Authentication authenticate(String username, String password) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

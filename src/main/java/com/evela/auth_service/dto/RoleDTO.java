@@ -49,10 +49,10 @@ public class RoleDTO extends BaseDTO<Long> {
 
     private Set<MenuRoleDTO> menuRoles;
 
-    @Embedded
-    private AuditMetadataDTO auditMetadata;
+    /*@Embedded
+    private AuditMetadataDTO auditMetadata;*/
 
-    @JsonDeserialize(using = GenericEnumDeserializer.class)
-    @JsonSerialize(using = GenericEnumSerializer.class)
+    //@JsonDeserialize(using = GenericEnumDeserializer.class)
+    //@JsonSerialize(using = GenericEnumSerializer.class)
     private Status status;
 }

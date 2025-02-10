@@ -21,7 +21,7 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "menus")
 @EntityListeners(AuditListener.class)
-public class Menu extends BaseEntity implements Auditable {
+public class Menu extends BaseEntity {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +43,6 @@ public class Menu extends BaseEntity implements Auditable {
     @MapKeyColumn(name = "roleName")*/
     /*@Column(name = "permissions")
     private Map<String, Set<String>> permissions;*/
-    @Embedded
-    private AuditMetadata auditMetadata;
+    /*@Embedded
+    private AuditMetadata auditMetadata;*/
 }
